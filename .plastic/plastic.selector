@@ -1,0 +1,4 @@
+repository "Sun Kills@riptererxd@cloud"
+  path "/"
+    br "/main"
+    co "/main"
