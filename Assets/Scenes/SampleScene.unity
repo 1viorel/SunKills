@@ -1674,7 +1674,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1431800841}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1706,17 +1706,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedText: {fileID: 1024764825}
+  walkSpeed: 5
   sprintSpeed: 10
-  groundDrag: 7
+  groundDrag: 2
   jumpForce: 10
   jumpCooldown: 0.25
-  airMultiplier: 1.4
+  airMultiplier: 1.2
   slideSpeed: 30
-  crouchSpeed: 6
+  speedIncreaseMultiplier: 2
+  slopeIncreaseMultiplier: 3
+  crouchSpeed: 3
   maxSlopeAngle: 40
   ground:
     serializedVersion: 2
     m_Bits: 1024
+  sprintKey: 304
   jumpKey: 32
   crouchKey: 99
   orientation: {fileID: 77871370}
@@ -1735,8 +1739,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 77871370}
   playerObj: {fileID: 1380684938}
-  slideForce: 0.75
-  maxSlideTime: 200
+  slideForce: 5
+  maxSlideTime: 3
   slideTimer: 0.5
   slideKey: 306
 --- !u!1 &1700805935
