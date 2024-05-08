@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GunManager : MonoBehaviour
 {
@@ -27,7 +28,9 @@ public class GunManager : MonoBehaviour
     public RaycastHit rayHit;
     public LayerMask whatIsEnemy;
 
-    void awake() {
+    public Text text;
+
+    void Awake() {
         
         bulletsLeft = magSize;
         readyToShoot = true;
@@ -77,8 +80,12 @@ public class GunManager : MonoBehaviour
         Invoke("ResetShot", timeBetweenShooting);
 
         if (bulletsShot > 0 && bulletsLeft > 0) {
-            Invoke("Shoot", timeBetweenShots);
+            Invoke("shoot", timeBetweenShots);
         }
+    }
+     private void ResetShot()
+    {
+        readyToShoot = true;
     }
 
     void ReloadFinished() {
@@ -97,5 +104,10 @@ public class GunManager : MonoBehaviour
     void Update()
     {
         myInput();
+        text.text = (bulletsLeft + " / " + magSize);
     }
 }
+
+
+
+ 
