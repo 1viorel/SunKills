@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+
+    //Make the rigib body speed drag the speed cap down, but respects the contrains of state cap speed
     [Header("HUD")]
     public Text speedText;
 
@@ -95,7 +97,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void stateHandler() {
-        
         if (isSliding) {
             state = playerState.Sliding;
            
