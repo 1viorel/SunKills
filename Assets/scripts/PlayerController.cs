@@ -10,6 +10,12 @@ public class PlayerController : MonoBehaviour
     [Header("HUD")]
     public Text speedText;
 
+    [Header("Sounds")]
+    public AudioSource footstepSound;
+    public AudioSource sprintSound;
+    public AudioSource jumpSound;
+    public AudioSource slideSound;
+
     [Header("Movement")]
     float movementSpeed;
     float desiredSpeed;
@@ -71,6 +77,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
 
+       
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
@@ -89,11 +96,43 @@ public class PlayerController : MonoBehaviour
         SpeedControl();
         stateHandler();
         UpdateSpeedHUD();
+        manageSound();
 
          // handle drag
         if (grounded) rb.drag = groundDrag;
         else rb.drag = 0; 
 
+    }
+
+    void manageSound() {
+       if (rb.velocity.magnitude > 1f) {
+        switch (state) {
+            case playerState.Walking:
+                footstepSound.enabled = true;
+                sprintSound.enabled = false;
+                slideSound.enabled = false;
+                break;
+            case playerState.Sprinting:
+                footstepSound.enabled = false;
+                sprintSound.enabled = true;
+                slideSound.enabled = false;
+                break;
+            case playerState.Sliding:
+                footstepSound.enabled = false;
+                sprintSound.enabled = false;
+                slideSound.enabled = true;
+                break;
+            default:
+                footstepSound.enabled = false;
+                sprintSound.enabled = false;
+                slideSound.enabled = false;
+                break;
+            }
+        } else {
+            footstepSound.enabled = false;
+            sprintSound.enabled = false;
+            slideSound.enabled = false;
+        }
     }
 
     void stateHandler() {
@@ -153,6 +192,7 @@ public class PlayerController : MonoBehaviour
         {
             readyToJump = false;
             Jump();
+            jumpSound.Play();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
