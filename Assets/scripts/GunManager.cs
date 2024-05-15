@@ -63,15 +63,14 @@ public class GunManager : MonoBehaviour
 
         Vector3 direction = playerCam.transform.forward + new Vector3(x, y, 0);
 
-        //Raycasting
+    
         if (Physics.Raycast(playerCam.transform.position, direction, out rayHit, range, whatIsEnemy)) {
             Debug.Log(rayHit.collider.name);
 
-            //To do, add enemies with take damage function
-
-            // if (rayHit.collider.CompareTag("Enemy")) {
-            //     rayHit.collider.GetComponent<Enemy>().TakeDamage(damage);
-            // }
+            
+            if (rayHit.collider.CompareTag("Enemy")) {
+                rayHit.collider.GetComponent<EnemyHealth>().TakeDamage(damage);
+            }
         }
 
         bulletsLeft--;

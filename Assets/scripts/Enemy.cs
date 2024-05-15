@@ -26,6 +26,15 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+       
+        float difficulty = EnemySpawner.getGlobalDifficultyMultiplier();
+        float lowerEnd = difficulty * 3f;
+        float upperEnd = difficulty * 6f;
+        agent.speed = Random.Range(lowerEnd, upperEnd);
+        agent.angularSpeed = Random.Range(lowerEnd*100, upperEnd*200);
+        agent.acceleration = Random.Range(lowerEnd*2, upperEnd*4);
+        sightRange = Random.Range(difficulty*10, difficulty*50);
+       
     }
 
     private void Update()
@@ -92,22 +101,4 @@ public class Enemy : MonoBehaviour
         alreadyAttacked = false;
     }
 
-    public void TakeDamage(int damage)
-    {
-        //health -= damage;
-        //if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
-    }
-
-    private void DestroyEnemy()
-    {
-        Destroy(gameObject);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
-    }
 }
