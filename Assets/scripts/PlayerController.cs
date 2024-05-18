@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
     //Make the rigib body speed drag the speed cap down, but respects the contrains of state cap speed
     [Header("HUD")]
-    public Text speedText;
+    public Image damageMultiplierBar; 
 
     [Header("Sounds")]
     public AudioSource footstepSound;
@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     public float speedIncreaseMultiplier;
     public float slopeIncreaseMultiplier;
     bool readyToJump;
+    private Coroutine healthCoroutine;
 
     [Header("Crouching")]
     public float crouchSpeed;
@@ -55,12 +56,17 @@ public class PlayerController : MonoBehaviour
 
     float horizontalInput;
     float verticalInput;
+    
+    float healthRegen = 5;
     bool exitingSlope;
 
     Vector3 moveDirection;
 
     Rigidbody rb;
 
+    public Health health;
+
+    public float damageMultiplier = 1f;
     
     enum playerState
     {
@@ -88,20 +94,32 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-
-        Debug.Log(state);
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 2f, ground);
         
         myInput();  
         SpeedControl();
         stateHandler();
-        UpdateSpeedHUD();
         manageSound();
 
          // handle drag
         if (grounded) rb.drag = groundDrag;
         else rb.drag = 0; 
 
+        if (health.HealthPlayer < 200) {
+            if (rb.velocity.magnitude > 1f)
+            health.HealthPlayer += ((healthRegen / rb.velocity.magnitude) * Time.deltaTime); 
+            else health.HealthPlayer += 8 * Time.deltaTime;
+        }
+
+        if (damageMultiplier <= 30) {
+            if (rb.velocity.magnitude > 12f) 
+            damageMultiplier += (rb.velocity.magnitude * Time.deltaTime) / 10;
+            else damageMultiplier = 1;
+
+            if (damageMultiplier > 30) damageMultiplier = 30;
+        }
+        Debug.Log(damageMultiplier);
+        damageMultiplierBar.fillAmount = damageMultiplier / 30f;
     }
 
     void manageSound() {
@@ -177,11 +195,7 @@ public class PlayerController : MonoBehaviour
         if(rb.velocity.magnitude > movementSpeed) rb.velocity = rb.velocity.normalized * movementSpeed;
     }
 
-    void UpdateSpeedHUD() {
-    
-        float currentSpeed = rb.velocity.magnitude;
-        speedText.text = "Speed: " + currentSpeed.ToString("F2");
-    }
+   
     
     void myInput()
     {

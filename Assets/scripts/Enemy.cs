@@ -28,8 +28,8 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
        
         float difficulty = EnemySpawner.getGlobalDifficultyMultiplier();
-        float lowerEnd = difficulty * 3f;
-        float upperEnd = difficulty * 6f;
+        float lowerEnd = difficulty * 2f;
+        float upperEnd = difficulty * 4f;
         agent.speed = Random.Range(lowerEnd, upperEnd);
         agent.angularSpeed = Random.Range(lowerEnd*100, upperEnd*200);
         agent.acceleration = Random.Range(lowerEnd*2, upperEnd*4);

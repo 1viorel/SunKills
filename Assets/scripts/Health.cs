@@ -6,13 +6,15 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    public int HealthPlayer;
-    public Text healthText;
+    public float HealthPlayer;
+    public Image healthBar;
+    public GameObject bloodSplatterPrefab;
 
     public void TakeDamage(int damage)
     {
         Debug.Log("Player took damage");
         HealthPlayer -= damage;
+        Instantiate(bloodSplatterPrefab, transform.position, Quaternion.identity);
         if (HealthPlayer <= 0)
         {
             Destroy(gameObject);
@@ -21,7 +23,7 @@ public class Health : MonoBehaviour
 
     private void Update()
     {
-        healthText.text = "Health: " + HealthPlayer.ToString();
+        healthBar.fillAmount = HealthPlayer / 200f;
     }
 
     

@@ -7,7 +7,7 @@ public class GunManager : MonoBehaviour
 {
 
     [Header("Gun Stats")]
-    public int damage;
+    public float damage;
     public float timeBetweenShots;
     public float range;
     public float reloadTime;
@@ -27,6 +27,8 @@ public class GunManager : MonoBehaviour
     public Transform attackPoint;
     public RaycastHit rayHit;
     public LayerMask whatIsEnemy;
+
+    public PlayerController damageMultiplier;
 
     public Text text;
 
@@ -69,7 +71,7 @@ public class GunManager : MonoBehaviour
 
             
             if (rayHit.collider.CompareTag("Enemy")) {
-                rayHit.collider.GetComponent<EnemyHealth>().TakeDamage(damage);
+                rayHit.collider.GetComponent<EnemyHealth>().TakeDamage(damage*damageMultiplier.damageMultiplier);
             }
         }
 
