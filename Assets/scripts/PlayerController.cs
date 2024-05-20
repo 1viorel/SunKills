@@ -112,13 +112,14 @@ public class PlayerController : MonoBehaviour
         }
 
         if (damageMultiplier <= 30) {
-            if (rb.velocity.magnitude > 12f) 
+            if (rb.velocity.magnitude > 20f) 
             damageMultiplier += (rb.velocity.magnitude * Time.deltaTime) / 10;
-            else damageMultiplier = 1;
+            else 
+            damageMultiplier -= Time.deltaTime * 3;
 
             if (damageMultiplier > 30) damageMultiplier = 30;
+            if (damageMultiplier < 1) damageMultiplier = 1;
         }
-        Debug.Log(damageMultiplier);
         damageMultiplierBar.fillAmount = damageMultiplier / 30f;
     }
 

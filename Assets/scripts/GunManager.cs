@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GunManager : MonoBehaviour
 {
 
+    public AudioSource gunSound;
     [Header("Gun Stats")]
     public float damage;
     public float timeBetweenShots;
@@ -59,7 +60,7 @@ public class GunManager : MonoBehaviour
 
     void shoot() {
         readyToShoot = false;
-
+        gunSound.Play();
         float x = Random.Range(-spread, spread);
         float y = Random.Range(-spread, spread);
 
@@ -77,7 +78,6 @@ public class GunManager : MonoBehaviour
 
         bulletsLeft--;
         bulletsShot--;
-
         Invoke("ResetShot", timeBetweenShooting);
 
         if (bulletsShot > 0 && bulletsLeft > 0) {

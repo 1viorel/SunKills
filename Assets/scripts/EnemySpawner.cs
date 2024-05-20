@@ -39,6 +39,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (currentWaveMonsters.Count == 0 && checked_flag==false)
            StartCoroutine(DelayedWaveStart());
+           Debug.Log(GlobalDifficultyMultiplier);
         
     }
 
@@ -75,7 +76,7 @@ public class EnemySpawner : MonoBehaviour
         checked_flag = true;
         yield return new WaitForSeconds(5.0f);
         
-        GlobalDifficultyMultiplier *= 1.2f;
+        GlobalDifficultyMultiplier *= 1.4f;
         currentWave++;
         text.text = "Wave: " + (currentWave + 1);
 

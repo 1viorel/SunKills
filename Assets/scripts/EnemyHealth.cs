@@ -62,7 +62,7 @@ public class EnemyHealth : MonoBehaviour
         }
         else if (HealthEnemy < 25)
         {
-            deathSound.Play();
+            //deathSound.Play();
             enemyModel1.SetActive(false);
             enemyModel2.SetActive(false);
             enemyModel3.SetActive(false);
